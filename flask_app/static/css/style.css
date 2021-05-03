@@ -1,0 +1,29 @@
+body{
+    box-sizing: border-box;
+}
+.content-container{
+    display: flex;
+}
+
+.header-container{
+    text-align: center;
+    padding: 20px 0;
+
+}
+
+.header-container p {
+    font-size: 32px;
+}
+
+.input-container{
+    width: 49%;
+    margin: 20px;
+    border: 1px dashed rgb(108, 108, 108);
+    padding: 10px;
+}
+
+.qr-container{
+    width: 49%;
+    margin: 20px;
+    border: 1px dashed rgb(108, 108, 108);
+}
