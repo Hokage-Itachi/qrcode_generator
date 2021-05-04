@@ -5,21 +5,6 @@ import base64
 secure_code = "4Z36rffJz4xFukmw7l0nRYVYgPkXW1kZHJeXvwmvAVtj7epD8AFsY4mhKNvCz9RXtzNzclvdK6LKId0cd1FNSS8qR2jJeAHVS1Gs"
 
 
-def data_formatter(data):
-    ipaddress = get_host_ip()
-
-    protocol = "http://"
-    port = ":5000"
-
-    action = "/get_information/"
-    host = protocol + ipaddress + port
-
-    action += data.get("fullname") + "&" + data.get("phone_number") + "&" + data.get("email")
-    print(len(action))
-    url = host + action
-    print(url)
-    return url
-
 
 def data_encode(data):
     ipaddress = get_host_ip()
@@ -33,8 +18,8 @@ def data_encode(data):
     for key in data:
         info_string += data.get(key) + "&"
     info_string = info_string[0:len(info_string) - 1]
-
-    info_id = combine_b64(base64_encode(info_string), base64_encode(secure_code[0:len(info_string)]))
+    secure_string = secure_code[0:len(info_string)]
+    info_id = combine_b64(base64_encode(info_string), base64_encode(secure_string))
 
     action += info_id
 
@@ -67,21 +52,21 @@ def get_host_ip():
 
 
 def base64_encode(string):
-    string_bytes = string.encode("ascii")
+    string_bytes = bytes(string, "utf-8")
 
     base64_bytes = base64.b64encode(string_bytes)
 
-    base64_string = base64_bytes.decode('ascii')
+    base64_string = base64_bytes.decode('ascii', "utf-8")
 
     return base64_string
 
 
 def base64_decode(base64_string):
-    base64_bytes = base64_string.encode("ascii")
+    base64_bytes = bytes(base64_string, "utf-8")
 
     string_bytes = base64.b64decode(base64_bytes)
 
-    string = string_bytes.decode("ascii")
+    string = string_bytes.decode("ascii", "utf-8")
 
     return string
 
@@ -90,7 +75,7 @@ def combine_b64(*b64_strings):
     result = ""
 
     n = len(b64_strings[0])
-
+    m = len(b64_strings[1])
     for i in range(n):
         result += b64_strings[0][i] + b64_strings[1][i]
 

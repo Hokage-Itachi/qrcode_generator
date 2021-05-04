@@ -18,12 +18,14 @@ body{
 .input-container{
     width: 49%;
     margin: 20px;
-    border: 1px dashed rgb(108, 108, 108);
+    border: 1px solid rgb(108, 108, 108);
     padding: 10px;
 }
 
 .qr-container{
     width: 49%;
     margin: 20px;
-    border: 1px dashed rgb(108, 108, 108);
+    border: 1px solid rgb(108, 108, 108);
+    padding: 10px;
+    text-align: center;
 }

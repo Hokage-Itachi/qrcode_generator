@@ -32,7 +32,7 @@ def generate():
 @app.route("/get_information/<info_id>")
 def get_information(info_id):
     info = spf.data_decode(info_id)
-    if(info == "404"):
-        return render_template("information.html", status = "404")
+    if (info == "404"):
+        return render_template("information.html", status="404")
     # print("Here")
     return render_template("information.html", fullname=info[0], phone_number=info[1], email=info[2], status="200")

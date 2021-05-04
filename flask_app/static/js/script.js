@@ -21,6 +21,8 @@ function getQRCode() {
             let img = document.createElement("img");
             img.setAttribute("src", "/static/" + resp);
             img.setAttribute("atl", "QR Code");
+            img.setAttribute("width", "300px");
+            img.setAttribute("height", "300px");
 
             qr_container.appendChild(p);
             qr_container.appendChild(img);
