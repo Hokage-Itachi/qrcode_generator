@@ -20,17 +20,19 @@ def generate():
     req_data = request.get_data().decode("utf-8")
     req_data = json.loads(req_data)
 
-    url = spf.data_formatter(req_data)
+    url, info_id = spf.data_encode(req_data)
 
-    filename = "images/qr_code.png"
+    filename = "images/" + info_id + ".png"
 
     qrg.create(data=url, filename=filename)
 
     return filename
 
 
-@app.route("/get_information/<fullname>&<phone_number>&<email>")
-def get_information(fullname, phone_number, email):
-    # s = fullname + "/n" + phone_number + "/n" + email
-    print("Here")
-    return render_template("information.html", fullname=fullname, phone_number=phone_number, email=email)
+@app.route("/get_information/<info_id>")
+def get_information(info_id):
+    info = spf.data_decode(info_id)
+    if(info == "404"):
+        return render_template("information.html", status = "404")
+    # print("Here")
+    return render_template("information.html", fullname=info[0], phone_number=info[1], email=info[2], status="200")
