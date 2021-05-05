@@ -1,18 +1,14 @@
 import binascii
 import socket
 import base64
+import re
 
 secure_code = "4Z36rffJz4xFukmw7l0nRYVYgPkXW1kZHJeXvwmvAVtj7epD8AFsY4mhKNvCz9RXtzNzclvdK6LKId0cd1FNSS8qR2jJeAHVS1Gs"
 
 
 def data_encode(data):
-    ipaddress = get_host_ip()
-
-    protocol = "http://"
-    port = ":5000"
-
     action = "/get_information/"
-    host = protocol + ipaddress + port
+    host = get_host()
     info_string = ""
     for key in data:
         info_string += data.get(key) + "&"
@@ -44,10 +40,15 @@ def data_decode(data):
     return info
 
 
-def get_host_ip():
-    hostname = socket.gethostname()
-    ipaddress = socket.gethostbyname(hostname)
-    return ipaddress
+def get_host():
+    ipaddress = get_host_ip()
+
+    protocol = "http://"
+
+    port = ":5000"
+
+    host = protocol + ipaddress + port
+    return host
 
 
 def base64_encode(string):
@@ -102,3 +103,30 @@ def separate_b64(combined_b64_string):
     b64_s2 = combined_b64_string[1:n:2]
 
     return b64_s1, b64_s2
+
+
+def data_format(data):
+    action = "/get_information/"
+    host = get_host()
+
+    filename = ""
+
+    for i in data:
+        filename += data[i] + "_"
+        action += data[i] + "&"
+
+    filename = filename[0:len(filename) - 1]
+    action = action[0: len(action) - 1]
+
+    filename = re.sub(" ", "_", filename)
+
+    url = host + action
+
+    return url, filename
+
+
+def get_host_ip():
+    hostname = socket.gethostname()
+    ipaddress = socket.gethostbyname(hostname)
+
+    return ipaddress

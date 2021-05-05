@@ -6,7 +6,7 @@
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
     <script src="{{url_for('static', filename='js/script.js')}}"></script>
-    <title>QRcode Generator</title>
+    <title>QRCode Generator</title>
 </head>
 <body>
 <div class="main-container">
@@ -15,6 +15,9 @@
     </div>
     <div class="content-container">
         <div class="input-container">
+            <div class="input-container-error" id="error_container" hidden>
+
+            </div>
             <div class="input-container-label">
                 <p>Nhập thông tin của bạn</p>
             </div>
@@ -22,7 +25,8 @@
                 <form action="/generate" method="POST">
                     <div class="form-group">
                         <label for="fullname">Họ và tên</label>
-                        <input type="text" class="form-control" id="fullname" placeholder="Họ và tên" name="fullname" required>
+                        <input type="text" class="form-control" id="fullname" placeholder="Họ và tên" name="fullname"
+                               required>
                     </div>
                     <div class="form-group">
                         <label for="phone_number">Số điện thoại</label>
@@ -33,6 +37,11 @@
                         <label for="email">Email</label>
                         <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
                                placeholder="Email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Địa chỉ</label>
+                        <input type="text" class="form-control" id="address" placeholder="Địa chỉ"
+                               required>
                     </div>
                     <button type="button" class="btn btn-primary" onclick="getQRCode()">Tạo QR</button>
                 </form>

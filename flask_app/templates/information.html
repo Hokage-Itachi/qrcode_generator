@@ -16,8 +16,8 @@
     <div class="content-container">
         <div class="input-container">
             {% if status == "404" %}
-            <div class="input-container-label">
-                <p style="color: red">Khách hàng chưa đăng ký</p>
+            <div class="input-container-error">
+                <p class="error">Khách hàng chưa đăng ký</p>
             </div>
             {% endif %}
             <div class="input-container-label">
@@ -39,6 +39,12 @@
                     <label for="email">Email</label>
                     <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
                            name="email" value="{{email}}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Địa chỉ</label>
+                    <input type="text" class="form-control" id="address" name="fullname"
+                           value="{{address}}" readonly>
                 </div>
 
             </div>
