@@ -9,10 +9,12 @@ function getQRCode() {
         "phone_number": phone_number,
         "email": email
     };
+    let qr_container = document.getElementById("qrcode_container");
+    qr_container.innerHTML = "";
+
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
             let resp = this.responseText;
-            let qr_container =  document.getElementById("qrcode_container");
             qr_container.hidden = false;
 
             let p = document.createElement("p");

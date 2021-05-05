@@ -5,7 +5,6 @@ import base64
 secure_code = "4Z36rffJz4xFukmw7l0nRYVYgPkXW1kZHJeXvwmvAVtj7epD8AFsY4mhKNvCz9RXtzNzclvdK6LKId0cd1FNSS8qR2jJeAHVS1Gs"
 
 
-
 def data_encode(data):
     ipaddress = get_host_ip()
 
@@ -31,8 +30,8 @@ def data_encode(data):
 def data_decode(data):
     info_b64, secure_b64 = separate_b64(data)
     try:
-        secure_string = base64_decode(secure_b64)
-        info_string = base64_decode(info_b64)
+        secure_string = base64_decode(secure_b64).rstrip()
+        info_string = base64_decode(info_b64).rstrip()
     except binascii.Error as e:
         print(e)
         return "404"
@@ -66,18 +65,33 @@ def base64_decode(base64_string):
 
     string_bytes = base64.b64decode(base64_bytes)
 
-    string = string_bytes.decode("ascii", "utf-8")
+    string = str(string_bytes, "utf-8")
 
     return string
 
 
 def combine_b64(*b64_strings):
     result = ""
+    s1 = b64_strings[0]
+    s2 = b64_strings[1]
+    n = len(s1)
+    m = len(s2)
+    if m > n:
+        k = (m - n) // 4
+        additional_space = ""
+        for i in range(k):
+            additional_space += "   "
+        s1 += base64_encode(additional_space)
+    else:
+        k = (n - m) // 4
+        additional_space = ""
+        for i in range(k):
+            additional_space += "   "
 
-    n = len(b64_strings[0])
-    m = len(b64_strings[1])
+        s2 += base64_encode(additional_space)
+
     for i in range(n):
-        result += b64_strings[0][i] + b64_strings[1][i]
+        result += s1[i] + s2[i]
 
     return result
 
