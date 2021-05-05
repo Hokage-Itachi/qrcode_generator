@@ -42,7 +42,7 @@ def generate():
     data = list(req_data.values())
     dbc.insert(data=data)
 
-    url, filename = spf.data_encode(req_data)
+    url, filename = spf.data_format(data)
     print(url)
 
     filename = "images/" + filename + ".png"
@@ -61,7 +61,7 @@ def generate():
 
 @app.route("/get_information/<fullname>&<phone_number>&<email>&<address>")
 def get_information(fullname, phone_number, email, address):
-    if (dbc.select_by_phone(phone_number)):
+    if dbc.select_by_phone(phone_number):
         return render_template("information.html", fullname=fullname, phone_number=phone_number, email=email,
                                address=address, status="200")
     else:

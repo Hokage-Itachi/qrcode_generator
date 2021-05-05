@@ -3,22 +3,26 @@ function getQRCode() {
     let fullname = document.getElementById("fullname").value;
     let phone_number = document.getElementById("phone_number").value;
     let email = document.getElementById("email").value;
-
+    let address = document.getElementById("address").value;
     if (!fullname || !phone_number | !email) {
         alert("Vui lòng nhập đủ thông tin.");
         return;
     }
 
-    let phone_regex = "(\\+84[3|5|7|8|9])+([0-9]{8})|(0[3|5|7|8|9])+([0-9]{8})\\b"
+    phone_number = phone_number.replace("+84", "0")
+    console.log(phone_number);
+    let phone_regex = "(0[3|5|7|8|9])+([0-9]{8})\\b"
     if (!phone_number.match(phone_regex)) {
         alert("Số điện thoại không đúng định dạng. Vui lòng nhập lại.");
         return;
     }
 
+
     let data = {
         "fullname": fullname,
         "phone_number": phone_number,
-        "email": email
+        "email": email,
+        'address': address
     };
 
     let qr_container = document.getElementById("qrcode_container");
