@@ -21,7 +21,7 @@ def generate():
     req_data = json.loads(req_data)
 
     url, info_id = spf.data_encode(req_data)
-
+    print(url)
     filename = "images/" + info_id + ".png"
 
     qrg.create(data=url, filename=filename)
