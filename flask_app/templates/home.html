@@ -8,7 +8,7 @@
     <script src="{{url_for('static', filename='js/script.js')}}"></script>
     <title>QRCode Generator</title>
 </head>
-<body>
+<body onload="getListCity()">
 <div class="main-container">
     <div class="header-container">
         <p>QRCODE GENERATOR</p>
@@ -39,9 +39,12 @@
                                placeholder="Email" name="email" required>
                     </div>
                     <div class="form-group">
-                        <label for="address">Địa chỉ</label>
-                        <input type="text" class="form-control" id="address" placeholder="Địa chỉ"
-                               required>
+                        <label for="address">Tỉnh, Thành phố</label>
+                        <input type="text" class="form-control" id="address" placeholder="Tỉnh, Thành phố"
+                               list="city_name" required>
+                        <datalist id="city_name">
+
+                        </datalist>
                     </div>
                     <button type="button" class="btn btn-primary" onclick="getQRCode()">Tạo QR</button>
                 </form>
