@@ -117,3 +117,15 @@ function format_data() {
 
     document.getElementById("user_data").value = request;
 }
+
+function getListCity() {
+    let cities = ['Hồ Chí Minh', 'Hà Nội', 'Đà Nẵng', 'Bình Dương', 'Đồng Nai', 'Khánh Hòa', 'Hải Phòng', 'Long An', 'Quảng Nam', 'Bà Rịa Vũng Tàu', 'Đắk Lắk', 'Cần Thơ', 'Bình Thuận  ', 'Lâm Đồng', 'Thừa Thiên Huế', 'Kiên Giang', 'Bắc Ninh', 'Quảng Ninh', 'Thanh Hóa', 'Nghệ An', 'Hải Dương', 'Gia Lai', 'Bình Phước', 'Hưng Yên', 'Bình Định', 'Tiền Giang', 'Thái Bình', 'Bắc Giang', 'Hòa Bình', 'An Giang', 'Vĩnh Phúc', 'Tây Ninh', 'Thái Nguyên', 'Lào Cai', 'Nam Định', 'Quảng Ngãi', 'Bến Tre', 'Đắk Nông', 'Cà Mau', 'Vĩnh Long', 'Ninh Bình', 'Phú Thọ', 'Ninh Thuận', 'Phú Yên', 'Hà Nam', 'Hà Tĩnh', 'Đồng Tháp', 'Sóc Trăng', 'Kon Tum', 'Quảng Bình', 'Quảng Trị', 'Trà Vinh', 'Hậu Giang', 'Sơn La', 'Bạc Liêu', 'Yên Bái', 'Tuyên Quang', 'Điện Biên', 'Lai Châu', 'Lạng Sơn', 'Hà Giang', 'Bắc Kạn', 'Cao Bằng']
+
+    let datata_list = document.getElementById("city_name");
+
+    for (let i = 0; i< cities.length; i++){
+        let option = document.createElement("option");
+        option.innerText = cities[i];
+        datata_list.appendChild(option);
+    }
+}

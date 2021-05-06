@@ -87,16 +87,7 @@ def statistic():
 
             data.append(user_info)
 
-    response = {
-        "code": "00",
-        "message": "Success",
-        "data": data
-    }
-
-    if not data:
-        response["code"] = "01"
-        response["message"] = "No user data"
-    return render_template("statistic.html", response=response)
+    return render_template("statistic.html", data=data)
 
 
 @app.route("/export", methods=["POST"])

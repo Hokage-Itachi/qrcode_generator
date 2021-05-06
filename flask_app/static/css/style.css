@@ -51,3 +51,10 @@ body{
 .title-container{
     width: 80%;
 }
+
+.filter-container{
+    display: flex;
+    margin: 10px 0;
+    justify-content: space-between;
+
+}
