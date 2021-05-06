@@ -1,6 +1,9 @@
+import json
 import socket
 
 import re
+
+import pandas
 
 
 def get_host():
@@ -24,13 +27,12 @@ def data_format(data):
     for i in data:
         action += i + "&"
 
-    filename = filename[0:len(filename) - 1]
     action = action[0: len(action) - 1]
 
     filename = re.sub(" ", "_", filename)
 
     url = host + action
-
+    print(filename)
     return url, filename
 
 
@@ -39,3 +41,23 @@ def get_host_ip():
     ipaddress = socket.gethostbyname(hostname)
 
     return ipaddress
+
+
+def to_excel(data):
+    filename = "D:/Excel/QRCode_app/user_data.xlsx"
+
+    data_dict = json.loads(data)
+    columns = ["Họ và tên", "Số điện thoại", "Email", "Địa chỉ"]
+
+    df = pandas.DataFrame()
+
+    for user_data in data_dict.get("data"):
+        data_list = list(user_data.values())
+        user_df = pandas.DataFrame([data_list], columns=columns)
+        # print(user_data)
+        df = pandas.concat([df, user_df], ignore_index=True)
+
+    writer = pandas.ExcelWriter(filename, engine="xlsxwriter")
+    df.to_excel(writer)
+    writer.close()
+    return filename

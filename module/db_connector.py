@@ -81,3 +81,64 @@ def select_by_email(email):
     return result
 
 
+def select_by_address(address):
+    conn = connect()
+    cursor = conn.cursor()
+
+    sql = """
+                    SELECT * FROM user_info
+                    WHERE address = '{}'
+            """.format(address)
+
+    cursor.execute(sql)
+    conn.commit()
+
+    rows = cursor.fetchall()
+
+    if (rows):
+        return rows
+
+    else:
+        return None
+
+
+def select_all():
+    conn = connect()
+    cursor = conn.cursor()
+
+    sql = """
+            SELECT * FROM user_info
+                        
+        """
+
+    cursor.execute(sql)
+    conn.commit()
+
+    rows = cursor.fetchall()
+
+    if (rows):
+        return rows
+
+    else:
+        return None
+
+
+def check_exist(fullname, phone_number, email, address):
+    conn = connect()
+    cursor = conn.cursor()
+
+    sql = """
+                SELECT * FROM user_info
+                WHERE fullname = '{}' AND phone_number = '{}' AND email = '{}' AND address = '{}' 
+            """.format(fullname, phone_number, email, address)
+
+    cursor.execute(sql)
+    conn.commit()
+
+    rows = cursor.fetchall()
+
+    if (rows):
+        return rows
+
+    else:
+        return None

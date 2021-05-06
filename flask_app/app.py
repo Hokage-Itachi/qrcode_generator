@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, url_for, redirect
+from flask import Flask, render_template, request, send_file
 from module import qr_generator as qrg
 from module import support_function as spf
 from module import db_connector as dbc
@@ -61,8 +61,47 @@ def generate():
 
 @app.route("/get_information/<fullname>&<phone_number>&<email>&<address>")
 def get_information(fullname, phone_number, email, address):
-    if dbc.select_by_phone(phone_number):
+    if dbc.check_exist(fullname, phone_number, email, address):
         return render_template("information.html", fullname=fullname, phone_number=phone_number, email=email,
                                address=address, status="200")
     else:
         return render_template("information.html", status="404")
+
+
+@app.route("/statistic")
+def statistic():
+    query_result = dbc.select_all()
+
+    data = []
+    i = 1
+    if query_result:
+        for row in query_result:
+            user_info = {
+                "id": i,
+                "fullname": row[1],
+                "phone_number": row[2],
+                "email": row[3],
+                "address": row[4]
+            }
+            i += 1
+
+            data.append(user_info)
+
+    response = {
+        "code": "00",
+        "message": "Success",
+        "data": data
+    }
+
+    if not data:
+        response["code"] = "01"
+        response["message"] = "No user data"
+    return render_template("statistic.html", response=response)
+
+
+@app.route("/export", methods=["POST"])
+def export():
+    req_data = request.form.get("data")
+
+    filename = spf.to_excel(req_data)
+    return send_file(filename, as_attachment=True)

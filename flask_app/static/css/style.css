@@ -1,6 +1,9 @@
 body{
     box-sizing: border-box;
 }
+.main-container{
+    padding: 10px;
+}
 .content-container{
     display: flex;
 }
@@ -31,4 +34,20 @@ body{
 }
 .error{
     color: red;
+}
+
+.search-container{
+    margin: 20px 0;
+}
+.header{
+    display: flex;
+}
+.button-container{
+    margin: 0 0 10px 0;
+    text-align: right;
+    padding: 4px;
+    width: 20%;
+}
+.title-container{
+    width: 80%;
 }

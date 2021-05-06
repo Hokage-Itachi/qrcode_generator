@@ -24,7 +24,7 @@ function getQRCode() {
         "email": email,
         'address': address
     };
-
+    document.getElementById("error_container").innerHTML = "";
     let qr_container = document.getElementById("qrcode_container");
     qr_container.innerHTML = "";
 
@@ -72,4 +72,48 @@ function showError(message) {
     p.innerText = message;
 
     error_container.appendChild(p);
+}
+
+function search() {
+    let s = document.getElementById("search-field").value.trim();
+
+    let table = document.getElementById("user-table");
+    for (let i = 1; i < table.rows.length; i++) {
+        let found = 0;
+        let row = table.rows[i].cells;
+        for (let j = 1; j < row.length; j++) {
+            let cell_content = row[j].innerText;
+            if (cell_content.search(s) !== -1) {
+                found = 1
+            }
+        }
+        if (found === 0) {
+            table.rows[i].style.display = "none";
+        } else {
+            table.rows[i].style.display = "table-row";
+        }
+    }
+
+}
+
+function format_data() {
+    let table = document.getElementById("user-table");
+    let key = ["fullname", "phone_number", "email", "address"]
+    let request = {'data': []};
+    for (let i = 1; i < table.rows.length; i++) {
+        // let found = 0;
+        if (table.rows[i].style.display !== "none") {
+            let data = {}
+            let row = table.rows[i].cells;
+            for (let j = 1; j < row.length; j++) {
+                data[key[j - 1]] = row[j].innerText;
+            }
+            request.data.push(data)
+        }
+    }
+
+    request = JSON.stringify(request)
+    console.log(request);
+
+    document.getElementById("user_data").value = request;
 }
