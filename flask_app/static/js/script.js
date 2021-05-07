@@ -76,13 +76,17 @@ function showError(message) {
 
 function search() {
     let s = document.getElementById("search-field").value.trim();
-
+    let indexes = getCheckedColumn();
     let table = document.getElementById("user-table");
     for (let i = 1; i < table.rows.length; i++) {
         let found = 0;
         let row = table.rows[i].cells;
-        for (let j = 1; j < row.length; j++) {
-            let cell_content = row[j].innerText;
+        for (let j in indexes) {
+            let cell_content = row[indexes[j]].innerText.trim();
+            if(cell_content !== "Hà Tĩnh" && cell_content !== "Quảng Ninh"){
+                console.log(s + " and " + cell_content);
+                console.log("vị trí: " + cell_content.includes(s));
+            }
             if (cell_content.search(s) !== -1) {
                 found = 1
             }
@@ -123,9 +127,64 @@ function getListCity() {
 
     let datata_list = document.getElementById("city_name");
 
-    for (let i = 0; i< cities.length; i++){
+    for (let i = 0; i < cities.length; i++) {
         let option = document.createElement("option");
         option.innerText = cities[i];
         datata_list.appendChild(option);
     }
+}
+
+function getChartData() {
+    let xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+            let resp = JSON.parse(this.responseText);
+
+            if (resp.code === "00") {
+                document.getElementById("chart_container").hidden = false;
+
+                console.log(resp.data);
+                drawChart(resp.data.address_data, "Thống kê theo thành phố", [["Thành phố","Số lượng"]], "city_chart");
+                drawChart(resp.data.status_data, "Thống kê theo trạng thái", [["Trạng thái","Số lượng"]], "status_chart");
+                document.getElementById("table-container").hidden = true;
+            }
+        }
+    };
+    xhttp.open("POST", "/visualize", true);
+    xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhttp.send();
+}
+
+function drawChart(data, title, header_data, container_id) {
+    let handled_data = header_data;
+    for (let key in data) {
+        if (data.hasOwnProperty(key)) {
+            handled_data.push([key, data[key]])
+        }
+    }
+
+    var chart_data = google.visualization.arrayToDataTable(handled_data);
+    let options = {'title': title, 'width': 550, 'height': 400};
+
+    // Display the chart inside the <div> element with id="piechart"
+    let city_chart = new google.visualization.PieChart(document.getElementById(container_id));
+    city_chart.draw(chart_data, options);
+
+}
+
+function getCheckedColumn(){
+    let filter = document.getElementById("filter_container");
+    let index_arr = []
+    let checkboxes = filter.querySelectorAll("input")
+
+    for (let i = 0; i < checkboxes.length; i++){
+        // console.log()
+        if(checkboxes[i].checked === true){
+            index_arr.push(i + 1);
+        }
+    }
+    // console.log(index_arr)
+    return index_arr;
+
 }

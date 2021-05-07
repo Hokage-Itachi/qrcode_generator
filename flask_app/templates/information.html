@@ -15,9 +15,13 @@
     </div>
     <div class="content-container">
         <div class="input-container">
-            {% if status == "404" %}
+            {% if code == "02" %}
             <div class="input-container-error">
                 <p class="error">Khách hàng chưa đăng ký</p>
+            </div>
+            {% elif code == "01" %}
+            <div class="input-container-error">
+                <p class="info">Check in thành công</p>
             </div>
             {% endif %}
             <div class="input-container-label">

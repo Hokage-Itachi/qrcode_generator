@@ -1,14 +1,16 @@
-body{
+body {
     box-sizing: border-box;
 }
-.main-container{
+
+.main-container {
     padding: 10px;
 }
-.content-container{
+
+.content-container {
     display: flex;
 }
 
-.header-container{
+.header-container {
     text-align: center;
     padding: 20px 0;
 
@@ -18,43 +20,58 @@ body{
     font-size: 32px;
 }
 
-.input-container{
+.input-container {
     width: 49%;
     margin: 20px;
     border: 1px solid rgb(108, 108, 108);
     padding: 10px;
 }
 
-.qr-container{
+.qr-container {
     width: 49%;
     margin: 20px;
     border: 1px solid rgb(108, 108, 108);
     padding: 10px;
     text-align: center;
 }
-.error{
+
+.error {
     color: red;
 }
 
-.search-container{
+.info {
+    color: #08e308;
+}
+
+.search-container {
     margin: 20px 0;
 }
-.header{
+
+.header {
     display: flex;
 }
-.button-container{
+
+.button-container {
     margin: 0 0 10px 0;
     text-align: right;
     padding: 4px;
     width: 20%;
 }
-.title-container{
+
+.title-container {
     width: 80%;
 }
 
-.filter-container{
+.filter-container {
     display: flex;
     margin: 10px 0;
     justify-content: space-between;
+}
 
+.pie-chart-column{
+    width: 50%;
+}
+
+.chart{
+    display: flex;
 }
