@@ -5,6 +5,7 @@ from module import db_connector as dbc
 import json
 
 app = Flask(__name__)
+check_in_ip = "192.168.50.193"
 
 
 @app.route('/')
@@ -62,10 +63,16 @@ def generate():
 @app.route("/get_information/<fullname>&<phone_number>&<email>&<address>")
 def get_information(fullname, phone_number, email, address):
     if dbc.check_exist(fullname, phone_number, email, address):
+        code = "00"
+        if request.remote_addr == check_in_ip:
+            status = 1
+            dbc.update(fullname, phone_number, email, address, status)
+            code = "01"
         return render_template("information.html", fullname=fullname, phone_number=phone_number, email=email,
-                               address=address, status="200")
+                               address=address, code=code)
     else:
-        return render_template("information.html", status="404")
+        code = "02"
+        return render_template("information.html", code=code)
 
 
 @app.route("/statistic")
@@ -76,12 +83,18 @@ def statistic():
     i = 1
     if query_result:
         for row in query_result:
+
+            status = "Chưa check in"
+            if row[5] == 1:
+                status = "Đã check in"
+
             user_info = {
                 "id": i,
                 "fullname": row[1],
                 "phone_number": row[2],
                 "email": row[3],
-                "address": row[4]
+                "address": row[4],
+                "status": status
             }
             i += 1
 
@@ -96,3 +109,38 @@ def export():
 
     filename = spf.to_excel(req_data)
     return send_file(filename, as_attachment=True)
+
+
+@app.route("/visualize", methods=["POST"])
+def visualize():
+    address_data = dbc.group_by_address()
+
+    status_data = dbc.group_by_status()
+
+    resp_data = {
+        "address_data": {},
+        "status_data": {}
+    }
+    for d in address_data:
+        resp_data["address_data"][d[0]] = d[1]
+
+    for d in status_data:
+        if d[0] == 1:
+            key = "Đã check in"
+        else:
+            key = "Chưa check in"
+        resp_data["status_data"][key] = d[1]
+
+    response = {
+        "code": "00",
+        "message": "Data group by address",
+        "data": []
+    }
+
+    if not address_data:
+        response["code"] = "01"
+        response["message"] = "No data found"
+
+    response["data"] = resp_data
+
+    return response

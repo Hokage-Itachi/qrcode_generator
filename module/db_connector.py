@@ -13,132 +13,102 @@ def connect():
 
 
 def insert(data):
-    conn = connect()
-
-    cursor = conn.cursor()
-
     sql = """
             INSERT INTO user_info(fullname, phone_number, email, address)
             VALUES ('{}', '{}', '{}', '{}')
     """.format(*data)
 
-    result = cursor.execute(sql)
-
-    conn.commit()
-
-    conn.close()
-
-    print("Insert Success")
+    execute(sql, "insert")
 
 
 def select_by_phone(phone_number):
-    conn = connect()
-    cursor = conn.cursor()
-
     sql = """
             SELECT * FROM user_info
             WHERE phone_number = '{}'
     """.format(phone_number)
 
-    # print(rows)
-
-    cursor.execute(sql)
-    conn.commit()
-
-    rows = cursor.fetchall()
-    conn.close()
-    result = []
-
-    if rows:
-        print(phone_number, "has exist.")
-        result = rows[0]
-
-    return result
+    return execute(sql, "select")
 
 
 def select_by_email(email):
-    conn = connect()
-    cursor = conn.cursor()
-
     sql = """
                 SELECT * FROM user_info
                 WHERE email = '{}'
         """.format(email)
 
-    cursor.execute(sql)
-    conn.commit()
-
-    rows = cursor.fetchall()
-    conn.close()
-    result = []
-
-    # print(rows)
-
-    if rows:
-        print(email, "has exist.")
-        result = rows[0]
-
-    return result
+    return execute(sql, "select")
 
 
 def select_by_address(address):
-    conn = connect()
-    cursor = conn.cursor()
-
     sql = """
                     SELECT * FROM user_info
                     WHERE address = '{}'
             """.format(address)
 
-    cursor.execute(sql)
-    conn.commit()
-
-    rows = cursor.fetchall()
-
-    if (rows):
-        return rows
-
-    else:
-        return None
+    return execute(sql, "select")
 
 
 def select_all():
-    conn = connect()
-    cursor = conn.cursor()
-
     sql = """
             SELECT * FROM user_info
                         
         """
 
-    cursor.execute(sql)
-    conn.commit()
-
-    rows = cursor.fetchall()
-
-    if (rows):
-        return rows
-
-    else:
-        return None
+    return execute(sql, "select")
 
 
 def check_exist(fullname, phone_number, email, address):
-    conn = connect()
-    cursor = conn.cursor()
-
     sql = """
                 SELECT * FROM user_info
                 WHERE fullname = '{}' AND phone_number = '{}' AND email = '{}' AND address = '{}' 
             """.format(fullname, phone_number, email, address)
 
+    return execute(sql, "select")
+
+
+def group_by_address():
+    sql = """
+        SELECT address, count(*) as number FROM user_info
+        GROUP BY address
+    """
+
+    return execute(sql, "select")
+
+
+def update(fullname, phone_number, email, address, status):
+    sql = """
+        UPDATE user_info
+        SET fullname = '{}',
+            phone_number = '{}',
+            email = '{}',
+            address = '{}',
+            status = '{}'
+        WHERE phone_number = '{}'
+    """.format(fullname, phone_number, email, address, status, phone_number)
+
+    return execute(sql, "update")
+
+
+def group_by_status():
+    sql = """
+            SELECT status, count(*) as number FROM user_info
+            GROUP BY status
+        """
+
+    return execute(sql, "select")
+def execute(sql, type):
+    conn = connect()
+    cursor = conn.cursor()
+
     cursor.execute(sql)
     conn.commit()
+    result = []
+    if type == "select":
+        result = cursor.fetchall()
 
-    rows = cursor.fetchall()
-
-    if (rows):
-        return rows
+    conn.close()
+    if (result):
+        return result
 
     else:
         return None
