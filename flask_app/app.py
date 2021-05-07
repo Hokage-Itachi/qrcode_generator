@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, send_file
+from flask import Flask, render_template, request, send_file, url_for, redirect, session
 from module import qr_generator as qrg
 from module import support_function as spf
 from module import db_connector as dbc
@@ -6,15 +6,19 @@ import json
 
 app = Flask(__name__)
 check_in_ip = "192.168.50.193"
+app.secret_key = "abcdef"
+admin_account = {
+    "username": "admin",
+    "password": "123"
+}
 
 
 @app.route('/')
-@app.route("/<img_file>")
-def home(img_file=None):
-    if (img_file):
-        return render_template("home.html", img_file=img_file)
+def home():
+    if not session.get("user"):
+        return render_template("home.html", role="user")
     else:
-        return render_template("home.html")
+        return redirect(url_for("render_admin"))
 
 
 @app.route("/generate", methods=["POST"])
@@ -25,7 +29,7 @@ def generate():
     if dbc.select_by_phone(req_data.get("phone_number")):
         response = {
             "code": "01",
-            "message": "Phone number has been registered",
+            "message": "Số điện thoại đã được đăng ký",
             "data": ""
         }
 
@@ -34,7 +38,7 @@ def generate():
     if dbc.select_by_email(req_data.get("email")):
         response = {
             "code": "02",
-            "message": "Email has been registered",
+            "message": "Email đã được đăng ký",
             "data": ""
         }
 
@@ -144,3 +148,29 @@ def visualize():
     response["data"] = resp_data
 
     return response
+
+
+@app.route("/admin/login", methods=["POST", "GET"])
+def render_login():
+    # session["user"] = request.remote_addr
+    if request.method == "GET":
+        if not session.get("user"):
+            return render_template("login.html", message=None)
+    else:
+        username = request.form["username"]
+        passwd = request.form["password"]
+
+        # if username == admin_account.get("username") and passwd == admin_account.get("password"):
+        if True:
+            session["user"] = username
+        else:
+            return render_template("login.html", message="Tên đăng nhập hoặc mật khẩu không đúng")
+    return redirect(url_for("render_admin"))
+
+
+@app.route("/admin")
+def render_admin():
+    if not session.get("user"):
+        return redirect(url_for("render_login"))
+    return render_template("home.html", role="admin")
+

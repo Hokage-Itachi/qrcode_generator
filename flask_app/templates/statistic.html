@@ -11,7 +11,7 @@
               crossorigin="anonymous">
         <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
         <script src="{{url_for('static', filename='js/script.js')}}"></script>
-        <title>QRcode Generator</title>
+        <title>Flask App</title>
     </head>
 </head>
 
@@ -21,6 +21,7 @@
         <div class="header">
             <div class="title-container">
                 <h1>Danh sách khách hàng</h1>
+                <a href="/">Quay lại</a>
             </div>
             <div class="button-container">
                 <form action="/export" method="POST">
@@ -103,7 +104,7 @@
     </div>
     <div class="chart-container" id="chart_container" hidden>
         <div class="title">
-
+            <h1>Thống kê theo biểu đồ</h1>
         </div>
         <div class="chart">
             <div class="pie-chart-column" id="city_chart"></div>

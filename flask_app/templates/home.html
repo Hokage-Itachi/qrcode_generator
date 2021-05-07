@@ -6,12 +6,12 @@
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
     <script src="{{url_for('static', filename='js/script.js')}}"></script>
-    <title>QRCode Generator</title>
+    <title>Flask app</title>
 </head>
 <body onload="getListCity()">
 <div class="main-container">
     <div class="header-container">
-        <p>QRCODE GENERATOR</p>
+        <p>ĐĂNG KÝ SỰ KIỆN</p>
     </div>
     <div class="content-container">
         <div class="input-container">
@@ -54,7 +54,9 @@
 
         </div>
     </div>
-    <a href="/statistic">Quản lý</a>
+    {% if role == "admin" %}
+    <a href="/statistic">Thống kê</a>
+    {% endif %}
 
 </div>
 </body>

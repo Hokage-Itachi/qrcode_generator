@@ -62,7 +62,7 @@ def check_exist(fullname, phone_number, email, address):
                 SELECT * FROM user_info
                 WHERE fullname = '{}' AND phone_number = '{}' AND email = '{}' AND address = '{}' 
             """.format(fullname, phone_number, email, address)
-
+    print("Check Exist SQL:", sql)
     return execute(sql, "select")
 
 

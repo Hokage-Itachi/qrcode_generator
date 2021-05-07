@@ -47,7 +47,7 @@ def to_excel(data):
     filename = "D:/Excel/QRCode_app/user_data.xlsx"
 
     data_dict = json.loads(data)
-    columns = ["Họ và tên", "Số điện thoại", "Email", "Địa chỉ"]
+    columns = ["Họ và tên", "Số điện thoại", "Email", "Địa chỉ", "Trạng thái"]
 
     df = pandas.DataFrame()
 

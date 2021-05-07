@@ -83,7 +83,7 @@ function search() {
         let row = table.rows[i].cells;
         for (let j in indexes) {
             let cell_content = row[indexes[j]].innerText.trim();
-            if(cell_content !== "Hà Tĩnh" && cell_content !== "Quảng Ninh"){
+            if (cell_content !== "Hà Tĩnh" && cell_content !== "Quảng Ninh") {
                 console.log(s + " and " + cell_content);
                 console.log("vị trí: " + cell_content.includes(s));
             }
@@ -123,7 +123,7 @@ function format_data() {
 }
 
 function getListCity() {
-    let cities = ['Hồ Chí Minh', 'Hà Nội', 'Đà Nẵng', 'Bình Dương', 'Đồng Nai', 'Khánh Hòa', 'Hải Phòng', 'Long An', 'Quảng Nam', 'Bà Rịa Vũng Tàu', 'Đắk Lắk', 'Cần Thơ', 'Bình Thuận  ', 'Lâm Đồng', 'Thừa Thiên Huế', 'Kiên Giang', 'Bắc Ninh', 'Quảng Ninh', 'Thanh Hóa', 'Nghệ An', 'Hải Dương', 'Gia Lai', 'Bình Phước', 'Hưng Yên', 'Bình Định', 'Tiền Giang', 'Thái Bình', 'Bắc Giang', 'Hòa Bình', 'An Giang', 'Vĩnh Phúc', 'Tây Ninh', 'Thái Nguyên', 'Lào Cai', 'Nam Định', 'Quảng Ngãi', 'Bến Tre', 'Đắk Nông', 'Cà Mau', 'Vĩnh Long', 'Ninh Bình', 'Phú Thọ', 'Ninh Thuận', 'Phú Yên', 'Hà Nam', 'Hà Tĩnh', 'Đồng Tháp', 'Sóc Trăng', 'Kon Tum', 'Quảng Bình', 'Quảng Trị', 'Trà Vinh', 'Hậu Giang', 'Sơn La', 'Bạc Liêu', 'Yên Bái', 'Tuyên Quang', 'Điện Biên', 'Lai Châu', 'Lạng Sơn', 'Hà Giang', 'Bắc Kạn', 'Cao Bằng']
+    let cities = ['Hồ Chí Minh', 'Hà Nội', 'Đà Nẵng', 'Bình Dương', 'Đồng Nai', 'Khánh Hòa', 'Hải Phòng', 'Long An', 'Quảng Nam', 'Bà Rịa Vũng Tàu', 'Đắk Lắk', 'Cần Thơ', 'Bình Thuận  ', 'Lâm Đồng', 'Thừa Thiên Huế', 'Kiên Giang', 'Bắc Ninh', 'Quảng Ninh', 'Thanh Hóa', 'Nghệ An', 'Hải Dương', 'Gia Lai', 'Bình Phước', 'Hưng Yên', 'Bình Định', 'Tiền Giang', 'Thái Bình', 'Bắc Giang', 'Hòa Bình', 'An Giang', 'Vĩnh Phúc', 'Tây Ninh', 'Thái Nguyên', 'Lào Cai', 'Nam Định', 'Quảng Ngãi', 'Bến Tre', 'Đắk Nông', 'Cà Mau', 'Vĩnh Long', 'Ninh Bình', 'Phú Thọ', 'Ninh Thuận', 'Phú Yên', 'Hà Nam', 'Hà Tĩnh', 'Đồng Tháp', 'Sóc Trăng', 'Kon Tum', 'Quảng Bình', 'Quảng Trị', 'Trà Vinh', 'Hậu Giang', 'Sơn La', 'Bạc Liêu', 'Yên Bái', 'Tuyên Quang', 'Điện Biên', 'Lai Châu', 'Lạng Sơn', 'Hà Giang', 'Bắc Kạn', 'Cao Bằng']
 
     let datata_list = document.getElementById("city_name");
 
@@ -145,8 +145,8 @@ function getChartData() {
                 document.getElementById("chart_container").hidden = false;
 
                 console.log(resp.data);
-                drawChart(resp.data.address_data, "Thống kê theo thành phố", [["Thành phố","Số lượng"]], "city_chart");
-                drawChart(resp.data.status_data, "Thống kê theo trạng thái", [["Trạng thái","Số lượng"]], "status_chart");
+                drawChart(resp.data.address_data, "Thống kê theo thành phố", [["Thành phố", "Số lượng"]], "city_chart");
+                drawChart(resp.data.status_data, "Thống kê theo trạng thái", [["Trạng thái", "Số lượng"]], "status_chart");
                 document.getElementById("table-container").hidden = true;
             }
         }
@@ -173,15 +173,25 @@ function drawChart(data, title, header_data, container_id) {
 
 }
 
-function getCheckedColumn(){
+function getCheckedColumn() {
     let filter = document.getElementById("filter_container");
     let index_arr = []
     let checkboxes = filter.querySelectorAll("input")
 
-    for (let i = 0; i < checkboxes.length; i++){
+    for (let i = 0; i < checkboxes.length; i++) {
         // console.log()
-        if(checkboxes[i].checked === true){
+        if (checkboxes[i].checked === true) {
             index_arr.push(i + 1);
+        }
+    }
+
+    if (index_arr.length === 0) {
+
+        for (let i = 0; i < checkboxes.length; i++) {
+            // console.log()
+
+            index_arr.push(i + 1);
+
         }
     }
     // console.log(index_arr)
