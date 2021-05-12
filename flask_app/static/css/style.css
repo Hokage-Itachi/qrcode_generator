@@ -3,35 +3,32 @@ body {
 }
 
 .main-container {
-    padding: 10px;
+    /*background-color: skyblue;*/
+    /*height: 650px;*/
+    margin: 10px 20px;
 }
 
 .content-container {
     display: flex;
 }
 
-.header-container {
-    text-align: center;
-    padding: 20px 0;
-
-}
-
 .header-container p {
-    font-size: 32px;
 }
 
 .input-container {
     width: 49%;
     margin: 20px;
-    border: 1px solid rgb(108, 108, 108);
+    border: 10px solid rgb(236, 226, 226);
     padding: 10px;
+    background-color: bisque;
 }
 
 .qr-container {
     width: 49%;
     margin: 20px;
-    border: 1px solid rgb(108, 108, 108);
+    border: 10px solid rgb(236, 226, 226);
     padding: 10px;
+    background-color: bisque;
     text-align: center;
 }
 
@@ -60,6 +57,15 @@ body {
 
 .title-container {
     width: 80%;
+    /*background-color: teal;*/
+    /*font-size: 32px;*/
+
+
+}
+
+.main-title {
+    border-bottom: 1px solid black;
+    padding: 20px 20px;
 }
 
 .filter-container {
@@ -68,14 +74,14 @@ body {
     justify-content: space-between;
 }
 
-.pie-chart-column{
+.pie-chart-column {
     width: 50%;
 }
 
-.chart{
+.chart {
     display: flex;
 }
 
-.title{
+.title {
     text-align: center;
 }
